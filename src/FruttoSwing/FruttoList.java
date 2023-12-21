@@ -194,6 +194,11 @@ public class FruttoList extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+        try{
+            Class.forName("org.sqlite.JDBC");
+        }catch (ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
         Runnable r = new Runnable() {
             @Override
             public void run() {

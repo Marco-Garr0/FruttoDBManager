@@ -37,20 +37,15 @@ public class NegozioDetail extends JDialog implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        try{
-            if (e.getSource() == btnUpdate) {
+        if (e.getSource() == btnUpdate) {
 
-                if (checkField() == true) {
+            if (checkField() == true) {
 
-                    int id = Integer.parseInt(txtId.getText());
-                    String nome = txtName.getText();
-                    String sede = txtSede.getText();
-                    NegozioDAO.update(new Negozio(id, nome, sede, null, null));
-                    dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
-                }
+                negozioDefault.setId(Integer.parseInt(txtId.getText()));
+                negozioDefault.setNome(txtName.getText());
+                negozioDefault.setNome(txtSede.getText());
+                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
             }
-        }catch(SQLException ex){
-            ex.printStackTrace();
         }
     }
 

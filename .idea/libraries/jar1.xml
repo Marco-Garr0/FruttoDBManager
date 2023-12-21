@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="jar1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../11.23/Frutto/jar" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/../../11.23/Frutto/jar" recursive="false" />
+  </library>
+</component>
