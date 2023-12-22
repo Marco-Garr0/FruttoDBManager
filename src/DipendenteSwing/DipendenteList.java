@@ -1,6 +1,7 @@
 package DipendenteSwing;
 
 import Negozietti.DAO.DipendenteDAO;
+import Negozietti.DAO.GenericDAO;
 import Negozietti.DAO.NegozioDAO;
 import Negozietti.Dipendente;
 import Negozietti.Negozio;
@@ -22,7 +23,11 @@ public class DipendenteList extends JFrame implements ActionListener {
     private JButton btnDelete = null;
     private JTable tblDipendenti = null;
     private ArrayList<Object> dipendenti = new ArrayList<>();
-
+    private JMenuItem mniNew = null;
+    private JMenuItem mniOpen = null;
+    private JMenuItem mniSave = null;
+    private JMenuItem mniExit = null;
+    private JMenuItem mniAbout = null;
     private DipendenteList(){
 
         setSize(800,600);
@@ -38,6 +43,26 @@ public class DipendenteList extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    private void open() throws SQLException{
+
+        JFileChooser flc = new JFileChooser("./");
+
+        int result = flc.showOpenDialog(this);
+        if(result != JFileChooser.APPROVE_OPTION)      //utente non ha premuto OK
+            return;
+
+
+        dipendenti.clear();
+        String fileName = flc.getSelectedFile().getAbsolutePath();
+        GenericDAO.setDbName(fileName);
+        dipendenti = DipendenteDAO.readAll();
+        populate();
+    }
+
+    private void save() throws SQLException{    //only for file
+
+
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
@@ -70,6 +95,22 @@ public class DipendenteList extends JFrame implements ActionListener {
                 dipendenti = DipendenteDAO.readAll();
                 populate();
             }
+            if(e.getSource() == mniNew){
+
+                dipendenti.clear();
+                populate();
+            }
+            if(e.getSource() == mniOpen)
+                open();
+
+            if(e.getSource() == mniSave)
+                save();
+
+            if(e.getSource() == mniExit)
+                System.exit(0);
+
+            if(e.getSource() == mniAbout)
+                JOptionPane.showMessageDialog(this, "Marco Garro, applicazione senza asciugamani","about", JOptionPane.INFORMATION_MESSAGE);
 
         }catch (SQLException ex){
             ex.printStackTrace();
@@ -79,7 +120,13 @@ public class DipendenteList extends JFrame implements ActionListener {
     private void populate(){
 
         String[] cols = {"id" , "nome", "cognome", "cellulare", "idNegozio"};
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {        //non rende editabili le celle
+                return false;
+            }
+        };
         for(String col: cols)
             model.addColumn(col);
 
@@ -92,12 +139,40 @@ public class DipendenteList extends JFrame implements ActionListener {
     }
     private void initUI(){
 
+        JMenuBar mnbNorth = new JMenuBar();
+
+        JMenu mnuFile = new JMenu("File");
+        mniNew = new JMenuItem("new");
+        mniOpen = new JMenuItem("Open...");
+        mniSave = new JMenuItem("Save in file...");
+        mniExit = new JMenuItem("Exit");
+        mnuFile.add(mniNew);
+        mnuFile.add(mniOpen);
+        mnuFile.add(mniSave);
+        mnuFile.addSeparator();
+        mnuFile.add(mniExit);
+
+        JMenu mnuHelp = new JMenu("Help");
+        mniAbout = new JMenuItem("about...");
+        mnuHelp.add(mniAbout);
+
+        mniNew.addActionListener(this);
+        mniOpen.addActionListener(this);
+        mniSave.addActionListener(this);
+        mniExit.addActionListener(this);
+        mniAbout.addActionListener(this);
+
+        mnbNorth.add(mnuFile);
+        mnbNorth.add(mnuHelp);
+
+        add(mnbNorth, BorderLayout.NORTH);
+
         tblDipendenti = new JTable();
 
         populate();
 
-        JScrollPane pnlNegozio = new JScrollPane(tblDipendenti);
-        add(pnlNegozio, BorderLayout.CENTER);
+        JScrollPane pnlDipendenti = new JScrollPane(tblDipendenti);
+        add(pnlDipendenti, BorderLayout.CENTER);
 
         JPanel pnlSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         btnNew = new JButton("new...");

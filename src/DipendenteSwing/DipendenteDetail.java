@@ -87,18 +87,40 @@ public class DipendenteDetail extends JDialog implements ActionListener {
         pnlId.add(lblId);
         pnlId.add(txtId);
 
-        JLabel lblName = new JLabel("name: ");
+        JLabel lblName = new JLabel("nome: ");
         this.txtName = new JTextField(20);
         JPanel pnlName = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pnlName.add(lblName);
         pnlName.add(txtName);
 
-        JPanel pnlCenter = new JPanel(new GridLayout(3,1));
+        JLabel lblCognome = new JLabel("cognome: ");
+        this.txtCognome = new JTextField(20);
+        JPanel pnlCognome = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlCognome.add(lblCognome);
+        pnlCognome.add(txtCognome);
+
+        JLabel lblCell = new JLabel("cellulare: ");
+        this.txtCell = new JTextField(20);
+        JPanel pnlCell = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlCell.add(lblCell);
+        pnlCell.add(txtCell);
+
+        JLabel lblIdNegozio = new JLabel("idNegozio: ");
+        this.txtIdNegozio = new JTextField(20);
+        JPanel pnlIdNegozio = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pnlIdNegozio.add(lblIdNegozio);
+        pnlIdNegozio.add(txtIdNegozio);
+
+
+        JPanel pnlCenter = new JPanel(new GridLayout(5,1));
 
         populate();
 
         pnlCenter.add(pnlId);
         pnlCenter.add(pnlName);
+        pnlCenter.add(pnlCognome);
+        pnlCenter.add(pnlCell);
+        pnlCenter.add(pnlIdNegozio);
 
         add(pnlCenter);     //add() ereditato da JFrame
 
