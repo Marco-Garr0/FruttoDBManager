@@ -20,9 +20,8 @@ public class FruttoNew extends JDialog implements ActionListener {
     private JTextField txtCosto = null;
     private final String patternFloat = "^(([0-9]*)|(([0-9]*)\\.([0-9]*)))$";
     private JButton btnNew = null;
-    private ArrayList<Object> frutti = null;
 
-    public FruttoNew(ArrayList<Object> frutti,Component frmRelated){
+    public FruttoNew(Component frmRelated){
 
         setTitle("Frutto new");
         setSize(400, 300);      //se passo un solo parametro setta width e height allo stesso valore in pixel
@@ -31,22 +30,25 @@ public class FruttoNew extends JDialog implements ActionListener {
         setModal(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        this.frutti = frutti;
         initUI();
         setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnNew) {
+        try{
+            if (e.getSource() == btnNew) {
 
-            if (checkField() == true) {
+                if (checkField() == true) {
 
-                String nome = txtName.getText();
-                Stagionalita stagionalita = (Stagionalita) cmbStagionalita.getSelectedItem();
-                float costo = Float.parseFloat(txtCosto.getText());
-                frutti.add(new Frutto(nome, stagionalita, (int)costo));
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
+                    String nome = txtName.getText();
+                    Stagionalita stagionalita = (Stagionalita) cmbStagionalita.getSelectedItem();
+                    float costo = Float.parseFloat(txtCosto.getText());
+                    FruttoDAO.create(new Frutto(nome, stagionalita, (int) costo));
+                    dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
+                }
             }
+        }catch (SQLException ex){
+            ex.printStackTrace();
         }
     }
 
@@ -142,7 +144,7 @@ public class FruttoNew extends JDialog implements ActionListener {
             @Override
             public void run() {
 
-                new FruttoNew(null, null);
+                new FruttoNew( null);
             }
         };
         SwingUtilities.invokeLater(r);

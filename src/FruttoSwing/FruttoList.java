@@ -13,16 +13,16 @@ import Negozietti.DAO.*;
 
 public class FruttoList extends JFrame implements ActionListener {
 
+    private ArrayList<Object> frutti = new ArrayList<>();
     private JButton btnDetail = null;
     private JButton btnNew = null;
     private JButton btnDelete = null;
     private JTable tblFrutto = null;
-    private ArrayList<Object> frutti = new ArrayList<>();
     private JMenuItem mniNew = null;
     private JMenuItem mniOpen = null;
     private JMenuItem mniSave = null;
     private JMenuItem mniExit = null;
-    private JMenuItem mniAbout;
+    private JMenuItem mniAbout = null;
 
     private FruttoList(ArrayList<Object> array){
 
@@ -55,17 +55,9 @@ public class FruttoList extends JFrame implements ActionListener {
         populate();
     }
 
-    private void save() throws SQLException{
+    private void save() throws SQLException{    //only for file
 
-        JFileChooser fleChooser = new JFileChooser("./");
-        int result = fleChooser.showSaveDialog(this);
 
-        if(result != JFileChooser.APPROVE_OPTION)
-            return ;
-
-        FruttoDAO.deleteAll();
-        for(Object obj: frutti)
-            FruttoDAO.create((Frutto) obj);
     }
 
     @Override
@@ -79,11 +71,7 @@ public class FruttoList extends JFrame implements ActionListener {
                 Frutto frutto = (Frutto) frutti.get(tblFrutto.getSelectedRow());
                 frutti.remove(tblFrutto.getSelectedRow());
                 populate();
-                try {
-                    FruttoDAO.delete(frutto.getId());
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                FruttoDAO.delete(frutto.getId());
             }
             if (e.getSource() == btnDetail) {
 
@@ -91,11 +79,13 @@ public class FruttoList extends JFrame implements ActionListener {
                     return ;
                 Frutto f = (Frutto) frutti.get(tblFrutto.getSelectedRow());
                 new FruttoDetail(f, this);
+                frutti = FruttoDAO.readAll();
                 populate();
             }
             if (e.getSource() == btnNew) {
 
-                new FruttoNew(frutti, this);
+                new FruttoNew(this);
+                frutti = FruttoDAO.readAll();
                 populate();
             }
 
@@ -148,7 +138,7 @@ public class FruttoList extends JFrame implements ActionListener {
         JMenu mnuFile = new JMenu("File");
         mniNew = new JMenuItem("new");
         mniOpen = new JMenuItem("Open...");
-        mniSave = new JMenuItem("Save...");
+        mniSave = new JMenuItem("Save in file...");
         mniExit = new JMenuItem("Exit");
         mnuFile.add(mniNew);
         mnuFile.add(mniOpen);

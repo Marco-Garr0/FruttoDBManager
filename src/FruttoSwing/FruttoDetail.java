@@ -1,5 +1,6 @@
 package FruttoSwing;
 
+import Negozietti.DAO.FruttoDAO;
 import Negozietti.Frutto;
 import Negozietti.Stagionalita;
 
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class FruttoDetail extends JDialog implements ActionListener {
 
@@ -35,16 +37,21 @@ public class FruttoDetail extends JDialog implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btnUpdate) {
+        try{
+            if (e.getSource() == btnUpdate) {
 
-            if (checkField() == true) {
+                if (checkField() == true) {
 
-                fruttoDefault.setId(Integer.parseInt(txtId.getText()));
-                fruttoDefault.setNome(txtName.getText());
-                fruttoDefault.setStagionalita((Stagionalita) cmbStagionalita.getSelectedItem());
-                fruttoDefault.setCosto((int)Float.parseFloat(txtCosto.getText()));
-                dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
+                    int id = Integer.parseInt(txtId.getText());
+                    String nome = txtName.getText();
+                    Stagionalita stagionalita = (Stagionalita) cmbStagionalita.getSelectedItem();
+                    float costo = Float.parseFloat(txtCosto.getText());
+                    FruttoDAO.update(new Frutto(id, nome, stagionalita, (int)costo));
+                    dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
+                }
             }
+        }catch (SQLException ex){
+            ex.printStackTrace();
         }
     }
 

@@ -54,17 +54,8 @@ public class NegozioList extends JFrame implements ActionListener {
         populate();
     }
 
-    private void save() throws SQLException{
+    private void save() throws SQLException {
 
-        JFileChooser fleChooser = new JFileChooser("./");
-        int result = fleChooser.showSaveDialog(this);
-
-        if(result != JFileChooser.APPROVE_OPTION)
-            return ;
-
-        NegozioDAO.deleteAll();
-        for(Object obj: negozi)
-            NegozioDAO.create((Negozio) obj);
     }
 
     @Override
@@ -78,11 +69,7 @@ public class NegozioList extends JFrame implements ActionListener {
                 Negozio n = (Negozio) negozi.get(tblNegozio.getSelectedRow());
                 negozi.remove(tblNegozio.getSelectedRow());
                 populate();
-                try {
-                    NegozioDAO.delete(n.getId());
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+                NegozioDAO.delete(n.getId());
             }
 
             if (e.getSource() == btnDetail) {
@@ -127,7 +114,13 @@ public class NegozioList extends JFrame implements ActionListener {
 
     private void populate(){
         String[] cols = {"id" , "nome", "sede"};
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel(){
+
+            @Override
+            public boolean isCellEditable(int row, int column) {        //non rende editabili le celle
+                return false;
+            }
+        };
         for(String col: cols)
             model.addColumn(col);
 

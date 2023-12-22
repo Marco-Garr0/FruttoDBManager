@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class NegozioNew extends JDialog implements ActionListener {
 
@@ -42,12 +43,11 @@ public class NegozioNew extends JDialog implements ActionListener {
 
                     String nome = txtName.getText();
                     String sede = txtSede.getText();
-
-                    NegozioDAO.create(new Negozio(0, nome, sede, null, null));
+                    NegozioDAO.create(new Negozio(nome, sede, null, null));
                     dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));       //close the detail page after the update
                 }
             }
-        }catch(SQLException ex){
+        }catch (SQLException ex){
             ex.printStackTrace();
         }
     }

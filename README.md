@@ -15,3 +15,11 @@ There's a default page to manage all the tables that is StartPage.java.
 
 ### Windows version
 Probably this doesn't work on Windows. Maybe one day i'll do it.
+
+### Troubleshooting on Linux
+If there is the following error:
+
+``java.sql.SQLException: No suitable driver found for jdbc:sqlite:<db/path>``
+
+try to add before the GenericDAO.connect() ``Class.forName("org.sqlite.JDBC")`` 
+the forName() method can cause a **ClassNotFoundException** so remember to catch it.
