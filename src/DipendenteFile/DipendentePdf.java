@@ -35,7 +35,7 @@ public class DipendentePdf implements IDipendenteFile {   //pdf formato vettoria
             document.add(new Paragraph("nome: " + d.getNome(), fontText));
             document.add(new Paragraph("cognome: " + d.getCognome(), fontText));
             document.add(new Paragraph("cell: " + d.getCell(), fontText));
-            document.add(new Paragraph("idNegozio: " + d.getIdNegozio(), fontText));
+            document.add(new Paragraph("idNegozio: " + d.getIdNegozio() + "\n", fontText));
         }
 
         document.close();

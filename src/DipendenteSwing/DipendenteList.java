@@ -1,18 +1,24 @@
 package DipendenteSwing;
 
+import DipendenteFile.*;
+import FruttoFIle.*;
 import Negozietti.DAO.DipendenteDAO;
 import Negozietti.DAO.GenericDAO;
 import Negozietti.DAO.NegozioDAO;
 import Negozietti.Dipendente;
+import Negozietti.Frutto;
 import Negozietti.Negozio;
 import NegozioSwing.NegozioDetail;
 import NegozioSwing.NegozioNew;
+import com.itextpdf.text.DocumentException;
+import jakarta.xml.bind.JAXBException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -61,7 +67,55 @@ public class DipendenteList extends JFrame implements ActionListener {
 
     private void save() throws SQLException{    //only for file
 
+        try {
+            JFileChooser flc = new JFileChooser("~");
 
+            int result = flc.showOpenDialog(this);
+            if (result != JFileChooser.APPROVE_OPTION)
+                return;
+
+            String filePath = flc.getSelectedFile().getAbsolutePath();
+            String fileExtension = null;
+            String[] splitted = filePath.split("[.]");
+            fileExtension = splitted[splitted.length - 1];
+
+            ArrayList<Dipendente> dipendenteToFile = new ArrayList<>();
+            for (Object obj : dipendenti)
+                dipendenteToFile.add((Dipendente) obj);
+
+            if (fileExtension.equals("csv")) {
+
+                DipendenteCsv fruttoCsv = new DipendenteCsv();
+                fruttoCsv.write(dipendenteToFile, filePath);
+            }
+            else if (fileExtension.equals("json")) {
+
+                DipendenteJson fruttoJson = new DipendenteJson();
+                fruttoJson.write(dipendenteToFile, filePath);
+            }
+            else if (fileExtension.equals("xml")) {
+
+                DipendenteXml fruttoXml = new DipendenteXml();
+                fruttoXml.write(dipendenteToFile, filePath);
+            }
+            else if (fileExtension.equals("xls")) {
+
+                DipendenteXls fruttoXls = new DipendenteXls();
+                fruttoXls.write(dipendenteToFile, filePath);
+            }
+            else if (fileExtension.equals("ods")) {
+
+                DipendenteOds fruttoOds = new DipendenteOds();
+                fruttoOds.write(dipendenteToFile, filePath);
+            }
+            else if (fileExtension.equals("pdf")) {
+
+                DipendentePdf fruttoPdf = new DipendentePdf();
+                fruttoPdf.write(dipendenteToFile, filePath);
+            }
+        }catch (JAXBException | IOException | DocumentException ex){
+            ex.printStackTrace();
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) {
