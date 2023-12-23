@@ -24,7 +24,7 @@ public class NegozioList extends JFrame implements ActionListener {
     private JMenuItem mniExit = null;
     private JMenuItem mniAbout;
 
-    private NegozioList(){
+    public NegozioList(){
 
         setSize(800,600);
         setTitle("lista negozi");

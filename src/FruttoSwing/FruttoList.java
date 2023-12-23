@@ -24,7 +24,7 @@ public class FruttoList extends JFrame implements ActionListener {
     private JMenuItem mniExit = null;
     private JMenuItem mniAbout = null;
 
-    private FruttoList(ArrayList<Object> array){
+    public FruttoList(){
 
         setSize(800,600);
         setTitle("lista frutti");
@@ -192,7 +192,7 @@ public class FruttoList extends JFrame implements ActionListener {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                new FruttoList(new ArrayList<Object>());
+                new FruttoList();
             }
         };
         SwingUtilities.invokeLater(r);

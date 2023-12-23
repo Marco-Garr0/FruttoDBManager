@@ -1,10 +1,14 @@
+import DipendenteSwing.DipendenteList;
 import DipendenteSwing.DipendenteNew;
+import FruttoSwing.FruttoList;
 import Negozietti.DAO.DipendenteDAO;
+import NegozioSwing.NegozioList;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 public class StartPage extends JFrame implements ActionListener {
@@ -17,7 +21,7 @@ public class StartPage extends JFrame implements ActionListener {
         setSize(800,600);
         setTitle("DB Manager");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         initUI();
         setVisible(true);
@@ -26,6 +30,21 @@ public class StartPage extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if(e.getSource() == btnDipendente){
+
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            new DipendenteList();
+        }
+        if(e.getSource() == btnFrutto){
+
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            new FruttoList();
+        }
+        if(e.getSource() == btnNegozio){
+
+            dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            new NegozioList();
+        }
     }
 
     private void initUI() {

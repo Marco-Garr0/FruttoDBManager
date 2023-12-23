@@ -28,7 +28,7 @@ public class DipendenteList extends JFrame implements ActionListener {
     private JMenuItem mniSave = null;
     private JMenuItem mniExit = null;
     private JMenuItem mniAbout = null;
-    private DipendenteList(){
+    public DipendenteList(){
 
         setSize(800,600);
         setTitle("lista dipendenti");
