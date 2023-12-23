@@ -7,8 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jar" level="project" />
-    <orderEntry type="library" name="sqlite-jdbc-3.43.2.2" level="project" />
     <orderEntry type="library" name="jar1" level="project" />
+    <orderEntry type="library" name="jarFiles" level="project" />
+    <orderEntry type="library" name="poi-bin-5.1" level="project" />
+    <orderEntry type="library" name="auxiliary" level="project" />
   </component>
 </module>

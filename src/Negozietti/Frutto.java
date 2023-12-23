@@ -1,10 +1,13 @@
 package Negozietti;
 
 import Negozietti.DAO.*;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.sql.*;
 import java.util.ArrayList;
-
+@XmlRootElement(name = "Frutto")
 public class Frutto {
 
     private int id = 0;
@@ -57,17 +60,17 @@ public class Frutto {
 
         return id;
     }
-
+    @XmlElement
     public void setNome(String nome){
 
         this.nome = nome;
     }
-
+    @XmlAttribute
     public void setStagionalita(Stagionalita stagione){
 
         this.stagione = stagione;
     }
-
+    @XmlAttribute
     public void setCosto(int costo){
 
         this.costo = costo;

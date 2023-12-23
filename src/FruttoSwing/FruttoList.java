@@ -5,11 +5,15 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import FruttoFIle.*;
 import Negozietti.*;
 import Negozietti.DAO.*;
+import com.itextpdf.text.DocumentException;
+import jakarta.xml.bind.JAXBException;
 
 public class FruttoList extends JFrame implements ActionListener {
 
@@ -49,15 +53,61 @@ public class FruttoList extends JFrame implements ActionListener {
 
 
         frutti.clear();
-        String fileName = flc.getSelectedFile().getAbsolutePath();
-        GenericDAO.setDbName(fileName);
+        String filePath = flc.getSelectedFile().getAbsolutePath();
+        GenericDAO.setDbName(filePath);
         frutti = FruttoDAO.readAll();
         populate();
     }
 
-    private void save() throws SQLException{    //only for file
+    private void save() throws SQLException{
+        try {
+            JFileChooser flc = new JFileChooser("~");
 
+            int result = flc.showOpenDialog(this);
+            if (result != JFileChooser.APPROVE_OPTION)      //utente non ha premuto OK
+                return;
+            String filePath = flc.getSelectedFile().getAbsolutePath();
+            String fileExtension = null;
+            String[] splitted = filePath.split("[.]");
+            fileExtension = splitted[splitted.length - 1];
 
+            ArrayList<Frutto> fruttiToFile = new ArrayList<>();
+            for (Object obj : frutti)
+                fruttiToFile.add((Frutto) obj);
+
+            if (fileExtension.equals("csv")) {
+
+                FruttoCsv fruttoCsv = new FruttoCsv();
+                fruttoCsv.write(fruttiToFile, filePath);
+            }
+            else if (fileExtension.equals("json")) {
+
+                FruttoJson fruttoJson = new FruttoJson();
+                fruttoJson.write(fruttiToFile, filePath);
+            }
+            else if (fileExtension.equals("xml")) {
+
+                FruttoXml fruttoXml = new FruttoXml();
+                fruttoXml.write(fruttiToFile, filePath);
+            }
+            else if (fileExtension.equals("xls")) {
+
+                FruttoXls fruttoXls = new FruttoXls();
+                fruttoXls.write(fruttiToFile, filePath);
+            }
+            else if (fileExtension.equals("ods")) {
+
+                FruttoOds fruttoOds = new FruttoOds();
+                fruttoOds.write(fruttiToFile, filePath);
+            }
+            else if (fileExtension.equals("pdf")) {
+
+                FruttoPdf fruttoPdf = new FruttoPdf();
+                fruttoPdf.write(fruttiToFile, filePath);
+            }
+        }catch (JAXBException | IOException | DocumentException ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
