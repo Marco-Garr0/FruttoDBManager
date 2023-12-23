@@ -65,7 +65,7 @@ public class Frutto {
 
         this.nome = nome;
     }
-    @XmlAttribute
+    @XmlElement
     public void setStagionalita(Stagionalita stagione){
 
         this.stagione = stagione;

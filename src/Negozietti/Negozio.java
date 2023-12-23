@@ -1,7 +1,11 @@
 package Negozietti;
 
-import java.util.ArrayList;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.util.ArrayList;
+@XmlRootElement(name = "Negozio")
 public class Negozio {
 
     private int id = 0;
@@ -30,7 +34,7 @@ public class Negozio {
     public int getId() {
         return id;
     }
-
+    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
@@ -38,7 +42,7 @@ public class Negozio {
     public String getNome() {
         return nome;
     }
-
+    @XmlElement
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -46,7 +50,7 @@ public class Negozio {
     public String getSede() {
         return sede;
     }
-
+    @XmlAttribute
     public void setSede(String sede) {
         this.sede = sede;
     }
@@ -87,5 +91,9 @@ public class Negozio {
         fields[1] = nome;
         fields[2] = sede;
         return fields;
+    }
+
+    public String toLine() {
+        return id + ";" + nome + ";" + sede;
     }
 }

@@ -5,11 +5,15 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import NegozioFile.*;
 import Negozietti.*;
 import Negozietti.DAO.*;
+import com.itextpdf.text.DocumentException;
+import jakarta.xml.bind.JAXBException;
 
 public class NegozioList extends JFrame implements ActionListener {
 
@@ -56,6 +60,55 @@ public class NegozioList extends JFrame implements ActionListener {
 
     private void save() throws SQLException {
 
+        try {
+            JFileChooser flc = new JFileChooser("~");
+
+            int result = flc.showOpenDialog(this);
+            if (result != JFileChooser.APPROVE_OPTION)
+                return;
+
+            String filePath = flc.getSelectedFile().getAbsolutePath();
+            String fileExtension = null;
+            String[] splitted = filePath.split("[.]");
+            fileExtension = splitted[splitted.length - 1];
+
+            ArrayList<Negozio> negoziToFile = new ArrayList<>();
+            for (Object obj : negozi)
+                negoziToFile.add((Negozio) obj);
+
+            if (fileExtension.equals("csv")) {
+
+                NegozioCsv negozioCsv = new NegozioCsv();
+                negozioCsv.write(negoziToFile, filePath);
+            }
+            else if (fileExtension.equals("json")) {
+
+                NegozioJson negozioJson = new NegozioJson();
+                negozioJson.write(negoziToFile, filePath);
+            }
+            else if (fileExtension.equals("xml")) {
+
+                NegozioXml negozioXml = new NegozioXml();
+                negozioXml.write(negoziToFile, filePath);
+            }
+            else if (fileExtension.equals("xls")) {
+
+                NegozioXls negozioXls = new NegozioXls();
+                negozioXls.write(negoziToFile, filePath);
+            }
+            else if (fileExtension.equals("ods")) {
+
+                NegozioOds negozioOds = new NegozioOds();
+                negozioOds.write(negoziToFile, filePath);
+            }
+            else if (fileExtension.equals("pdf")) {
+
+                NegozioPdf negozioPdf = new NegozioPdf();
+                negozioPdf.write(negoziToFile, filePath);
+            }
+        }catch (JAXBException | IOException | DocumentException ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -138,7 +191,7 @@ public class NegozioList extends JFrame implements ActionListener {
         JMenu mnuFile = new JMenu("File");
         mniNew = new JMenuItem("new");
         mniOpen = new JMenuItem("Open...");
-        mniSave = new JMenuItem("Save...");
+        mniSave = new JMenuItem("Save in file...");
         mniExit = new JMenuItem("Exit");
         mnuFile.add(mniNew);
         mnuFile.add(mniOpen);

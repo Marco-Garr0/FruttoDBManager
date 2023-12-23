@@ -85,33 +85,33 @@ public class DipendenteList extends JFrame implements ActionListener {
 
             if (fileExtension.equals("csv")) {
 
-                DipendenteCsv fruttoCsv = new DipendenteCsv();
-                fruttoCsv.write(dipendenteToFile, filePath);
+                DipendenteCsv dipendenteCsv = new DipendenteCsv();
+                dipendenteCsv.write(dipendenteToFile, filePath);
             }
             else if (fileExtension.equals("json")) {
 
-                DipendenteJson fruttoJson = new DipendenteJson();
-                fruttoJson.write(dipendenteToFile, filePath);
+                DipendenteJson dipendenteJson = new DipendenteJson();
+                dipendenteJson.write(dipendenteToFile, filePath);
             }
             else if (fileExtension.equals("xml")) {
 
-                DipendenteXml fruttoXml = new DipendenteXml();
-                fruttoXml.write(dipendenteToFile, filePath);
+                DipendenteXml dipendenteXml = new DipendenteXml();
+                dipendenteXml.write(dipendenteToFile, filePath);
             }
             else if (fileExtension.equals("xls")) {
 
-                DipendenteXls fruttoXls = new DipendenteXls();
-                fruttoXls.write(dipendenteToFile, filePath);
+                DipendenteXls dipendenteXls = new DipendenteXls();
+                dipendenteXls.write(dipendenteToFile, filePath);
             }
             else if (fileExtension.equals("ods")) {
 
-                DipendenteOds fruttoOds = new DipendenteOds();
-                fruttoOds.write(dipendenteToFile, filePath);
+                DipendenteOds dipendenteOds = new DipendenteOds();
+                dipendenteOds.write(dipendenteToFile, filePath);
             }
             else if (fileExtension.equals("pdf")) {
 
-                DipendentePdf fruttoPdf = new DipendentePdf();
-                fruttoPdf.write(dipendenteToFile, filePath);
+                DipendentePdf dipendentePdf = new DipendentePdf();
+                dipendentePdf.write(dipendenteToFile, filePath);
             }
         }catch (JAXBException | IOException | DocumentException ex){
             ex.printStackTrace();
