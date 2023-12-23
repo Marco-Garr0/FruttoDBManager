@@ -1,5 +1,10 @@
 package Negozietti;
 
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Dipendente")
 public class Dipendente {
 
     private int id = 0;
@@ -30,7 +35,7 @@ public class Dipendente {
         return id;
     }
 
-
+    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
@@ -39,6 +44,7 @@ public class Dipendente {
         return nome;
     }
 
+    @XmlElement
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -47,6 +53,7 @@ public class Dipendente {
         return cognome;
     }
 
+    @XmlElement
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
@@ -55,7 +62,7 @@ public class Dipendente {
         return cell;
     }
 
-
+    @XmlAttribute
     public void setCell(String cell) {
         this.cell = cell;
     }
@@ -63,7 +70,7 @@ public class Dipendente {
     public int getIdNegozio() {
         return idNegozio;
     }
-
+    @XmlAttribute
     public void setIdNegozio(int idNegozio) {
         this.idNegozio = idNegozio;
     }
@@ -89,5 +96,10 @@ public class Dipendente {
         rows[4] = idNegozio + "";
 
         return rows;
+    }
+
+    public String toLine() {
+
+        return id + ";" + nome + ";" + cognome + ";" + cell + ";" + idNegozio;
     }
 }
