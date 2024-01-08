@@ -11,7 +11,7 @@ Into the standard db there're four tables:
 by the menubar the app can open different dbs.
 
 ### How to use
-There's a default page to manage all the tables that is StartPage.java.
+There's a default page to manage all the tables that is **StartPage.java**.
 in the menubar, under **"file"** the **"open..."** item opens a .db file; the **"save in file..."** item writes 
 on a selected file or on a new file in six different formats: csv, json, xml, xls, ods, pdf.
 
