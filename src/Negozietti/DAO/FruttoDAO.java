@@ -33,15 +33,10 @@ public class FruttoDAO extends GenericDAO {
         Statement statement = GenericDAO.conn.createStatement();
         ResultSet rs = statement.executeQuery(sql);
 
-        if(rs != null){
-            rs.next();
-            Frutto f =  new Frutto( rs.getInt("id"), rs.getString("nome"), Stagionalita.valueOf(rs.getString("stagionalita").toUpperCase()), rs.getInt("costo"));
-            GenericDAO.conn.close();
-            return f;
-        }
-
+        rs.next();
+        Frutto f =  new Frutto(rs.getInt("id"), rs.getString("nome"), Stagionalita.valueOf(rs.getString("stagionalita").toUpperCase()), rs.getInt("costo"));
         GenericDAO.conn.close();
-        return null;
+        return f;
     }
 
     public static ArrayList<Object> readAll() throws SQLException{
@@ -53,16 +48,12 @@ public class FruttoDAO extends GenericDAO {
 
         ArrayList<Object> frutti = new ArrayList<Object>();
 
-        if(rs != null){
+        while(rs.next())
+            frutti.add(new Frutto(rs.getInt("id"), rs.getString("nome"), Stagionalita.valueOf(rs.getString("stagionalita").toUpperCase()), rs.getInt("costo")));
 
-            while(rs.next())
-                frutti.add(new Frutto(rs.getInt("id"), rs.getString("nome"), Stagionalita.valueOf(rs.getString("stagionalita").toUpperCase()), rs.getInt("costo")));
-
-            GenericDAO.conn.close();
-            return frutti;
-        }
         GenericDAO.conn.close();
-        return null;
+        return frutti;
+
     }
 
     public static boolean update(Frutto f) throws SQLException{
@@ -94,14 +85,10 @@ public class FruttoDAO extends GenericDAO {
         Statement statement = GenericDAO.conn.createStatement();
         ResultSet rs = statement.executeQuery(sql);
 
-        if(rs != null){
+        while(rs.next())
+            frutti.add(new Frutto(rs.getInt("id"), rs.getString("nome"), Stagionalita.valueOf(rs.getString("stagionalita").toUpperCase()), rs.getInt("costo")));
 
-            while(rs.next())
-                frutti.add(new Frutto(rs.getInt("id"), rs.getString("nome"), Stagionalita.valueOf(rs.getString("stagionalita").toUpperCase()), rs.getInt("costo")));
-
-            return frutti;
-        }
-        return null;
+        return frutti;
     }
 
     public static void deleteAll() throws SQLException {

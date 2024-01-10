@@ -33,15 +33,10 @@ public class DipendenteDAO extends GenericDAO {
         Statement statement = GenericDAO.conn.createStatement();
         ResultSet rs = statement.executeQuery(sql);
 
-        if(rs != null){
-            rs.next();
-            Dipendente d = new Dipendente(rs.getInt("idDipendente"),rs.getString("nome"), rs.getString("cognome"), rs.getString("cellulare"), rs.getInt("idNegozio"));
-            GenericDAO.conn.close();
-            return d;
-        }
-
+        rs.next();
+        Dipendente d = new Dipendente(rs.getInt("idDipendente"),rs.getString("nome"), rs.getString("cognome"), rs.getString("cellulare"), rs.getInt("idNegozio"));
         GenericDAO.conn.close();
-        return null;
+        return d;
     }
 
     public static ArrayList<Object> readAll() throws SQLException{
@@ -53,16 +48,11 @@ public class DipendenteDAO extends GenericDAO {
 
         ArrayList<Object> dipendenti = new ArrayList<Object>();
 
-        if(rs != null){
+        while(rs.next())
+            dipendenti.add(new Dipendente(rs.getInt("idDipendente"),rs.getString("nome"), rs.getString("cognome"), rs.getString("cellulare"),rs.getInt("idNegozio")));
 
-            while(rs.next())
-                dipendenti.add(new Dipendente(rs.getInt("idDipendente"),rs.getString("nome"), rs.getString("cognome"), rs.getString("cellulare"),rs.getInt("idNegozio")));
-
-            GenericDAO.conn.close();
-            return dipendenti;
-        }
         GenericDAO.conn.close();
-        return null;
+        return dipendenti;
     }
 
     public static boolean update(Dipendente d) throws SQLException {
@@ -93,14 +83,9 @@ public class DipendenteDAO extends GenericDAO {
 
         ArrayList<Dipendente> dipendenti = new ArrayList<Dipendente>();
 
-        if(rs != null){
+        while(rs.next())
+            dipendenti.add(new Dipendente(rs.getInt("idDipendente"),rs.getString("nome"), rs.getString("cognome"), rs.getString("cellulare"),rs.getInt("idNegozio")));
 
-            while(rs.next())
-                dipendenti.add(new Dipendente(rs.getInt("idDipendente"),rs.getString("nome"), rs.getString("cognome"), rs.getString("cellulare"),rs.getInt("idNegozio")));
-
-            return dipendenti;
-        }
-
-        return null;
-        }
+        return dipendenti;
     }
+}

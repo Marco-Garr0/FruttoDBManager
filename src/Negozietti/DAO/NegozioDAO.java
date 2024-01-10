@@ -37,15 +37,11 @@ public class NegozioDAO extends GenericDAO{
 
         ArrayList<Frutto> frutti = FruttoDAO.readAllNegozio(id);
         ArrayList<Dipendente> dipendenti = DipendenteDAO.readAllNegozi(id);
-        if(rs != null){
-            rs.next();
-            Negozio n = new Negozio(rs.getInt("idNegozio"),rs.getString("nome"), rs.getString("sede"), FruttoDAO.readAllNegozio(id),DipendenteDAO.readAllNegozi(id));
-            GenericDAO.conn.close();
-            return n;
-        }
 
+        rs.next();
+        Negozio n = new Negozio(rs.getInt("idNegozio"),rs.getString("nome"), rs.getString("sede"), FruttoDAO.readAllNegozio(id),DipendenteDAO.readAllNegozi(id));
         GenericDAO.conn.close();
-        return null;
+        return n;
     }
 
     public static ArrayList<Object> readAll() throws SQLException{
@@ -57,16 +53,11 @@ public class NegozioDAO extends GenericDAO{
 
         ArrayList<Object> negozi = new ArrayList<Object>();
 
-        if(rs != null){
+        while(rs.next())
+            negozi.add(new Negozio(rs.getInt("idNegozio"),rs.getString("nome"), rs.getString("sede"), FruttoDAO.readAllNegozio(rs.getInt("idNegozio")),DipendenteDAO.readAllNegozi(rs.getInt("idNegozio"))));
 
-            while(rs.next())
-                negozi.add(new Negozio(rs.getInt("idNegozio"),rs.getString("nome"), rs.getString("sede"), FruttoDAO.readAllNegozio(rs.getInt("idNegozio")),DipendenteDAO.readAllNegozi(rs.getInt("idNegozio"))));
-
-            GenericDAO.conn.close();
-            return negozi;
-        }
         GenericDAO.conn.close();
-        return null;
+        return negozi;
     }
 
     public static boolean update(Negozio n) throws SQLException{
@@ -100,16 +91,11 @@ public class NegozioDAO extends GenericDAO{
 
         ArrayList<String> negozi = new ArrayList<>();
 
-        if(rs != null){
-
-            while(rs.next())
-                negozi.add(rs.getString("idNegozio"));
+        while(rs.next())
+            negozi.add(rs.getString("idNegozio"));
 
             GenericDAO.conn.close();
             return negozi;
-        }
-        GenericDAO.conn.close();
-        return null;
     }
 
     public static void deleteAll() throws SQLException {
