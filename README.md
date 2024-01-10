@@ -2,7 +2,7 @@
 Java Swing graphical interface to manage with an Sqlite DB using jaxb
 
 ### Structure
-Into the standard db there're four tables:
+Into the standard db there are four tables:
 - negozi [shops]: ``CREATE TABLE negozi(idNegozio INTEGER PRIMARY KEY AUTOINCREMENT,nome TEXT, sede TEXT);``
 - frutto [fruit]: ``CREATE TABLE frutto(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, stagionalita TEXT, costo INT);``
 - dipendenti [employees]:  ``CREATE TABLE dipendenti(idDipendente INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, cognome TEXT, cellulare TEXT, idNegozio INTEGER, FOREIGN KEY (idNegozio) REFERENCES negozi (idNegozio));``
@@ -23,5 +23,5 @@ If there is the following error:
 
 ``java.sql.SQLException: No suitable driver found for jdbc:sqlite:<db/path>``
 
-try to add before the GenericDAO.connect() ``Class.forName("org.sqlite.JDBC")`` 
+try to add ``Class.forName("org.sqlite.JDBC")`` before the GenericDAO.connect();  
 the forName() method can cause a **ClassNotFoundException** so remember to catch it.
